@@ -1,0 +1,29 @@
+button{
+    width: 100%;
+    height: 31px;
+    margin-bottom: 5px;
+    background: gray;
+    color: white;
+    border: gray;
+}
+.left{
+    text-align: left;
+    padding: 6px;
+}
+.bold{
+    font-weight: bold;
+}
+.panal{
+    padding: 20px;
+    
+
+}
+.lefttext{
+    float: left;
+}
+.righttext{
+    float: right;
+}
+.center{
+    text-align: center;
+}
