@@ -36,7 +36,7 @@ export default function Accordian(){
     <div>
         <h1 className='center'>Welcome to Tringapps!</h1>
         {profileData.map(profile =>{
-            return <div  key={profile.id}><button onClick={()=>showprofile(profile)}><span className='lefttext'>{profile.first_name}</span><span className='righttext'><i className={
+            return <div  key={profile.id}><button className='button' onClick={()=>showprofile(profile)}><span className='lefttext'>{profile.first_name}</span><span className='righttext'><i className={
                 profile.isActive ? "fa fa-chevron-up":"fa fa-chevron-down"
             }></i></span></button>
             { profile.isActive ? <div className='panal'>

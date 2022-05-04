@@ -1,0 +1,36 @@
+.align{
+    text-align: center;
+}
+.input {
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+  }
+  
+  .input:focus {
+    border: 2px solid #555;
+  }
+  .err{
+      color: red;
+  }
+  .bordererr{
+    border: 2px solid red;
+  }
+  .buttonform {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 20%;
+    height: 37px;
+  }
