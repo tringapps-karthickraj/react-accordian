@@ -4,8 +4,9 @@ import '../assets/accordian.css';
 
 export default function Accordian(){
     const [profileData,setProfileData] = useState([]);
+    const link = "https://reqres.in"
     useEffect(() => {
-        axios.get("https://reqres.in/api/users")
+        axios.get(link +"/api/users")
         .then(res=>{
            let result = res.data.data;
            result.forEach(element => {
@@ -13,8 +14,8 @@ export default function Accordian(){
             });
             setProfileData(result);
         })
-        .catch(err=>{
-            console.log(err)
+        .catch(error=>{
+            console.log(error)
         })
     }, [])
     function showprofile(profile){
