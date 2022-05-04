@@ -1,5 +1,5 @@
 import './App.css';
-import Accordian from './accordian';
+import Accordian from './components/accordian';
 function App() {
   return (
     <div className="App">

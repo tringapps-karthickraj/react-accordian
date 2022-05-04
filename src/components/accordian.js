@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from 'react';
 import axios from 'axios';
-import './accordian.css';
+import '../assets/accordian.css';
 
 export default function Accordian(){
-    const [data,setdata] = useState([]);
+    const [profileData,setProfileData] = useState([]);
     useEffect(() => {
         axios.get("https://reqres.in/api/users")
         .then(res=>{
@@ -11,32 +11,31 @@ export default function Accordian(){
            result.forEach(element => {
                 element.isActive = false;
             });
-            setdata(result);
+            setProfileData(result);
         })
         .catch(err=>{
             console.log(err)
         })
     }, [])
     function showprofile(profile){
-       
-        data.forEach(element => {
+        profileData.forEach(element => {
             if(element.id !== profile.id){
                 element.isActive = false;
             }
             
         });
         profile.isActive = !profile.isActive;
-        setdata([...data]);
+        setProfileData([...profileData]);
         let localprofile ={
             profile:profile
         }
-        localStorage['profile'] = JSON.stringify(localprofile);
+        sessionStorage['profile'] = JSON.stringify(localprofile);
     }
     
   return (
     <div>
         <h1 className='center'>Welcome to Tringapps!</h1>
-        {data.map(profile =>{
+        {profileData.map(profile =>{
             return <div  key={profile.id}><button onClick={()=>showprofile(profile)}><span className='lefttext'>{profile.first_name}</span><span className='righttext'><i className={
                 profile.isActive ? "fa fa-chevron-up":"fa fa-chevron-down"
             }></i></span></button>
@@ -44,16 +43,16 @@ export default function Accordian(){
            
                 <table>
                     <tr>
-                        <td><img src={profile.avatar}/></td>
+                        <td><img src={profile.avatar} alt=""/></td>
                         <td>
                             <tr>
-                                <td class="left"><span class="bold">First name:</span>{profile.first_name}</td>
+                                <td className="left"><span className="bold">First name:</span>{profile.first_name}</td>
                             </tr>
                             <tr>
-                                <td class="left"><span class="bold">Last name:</span>{profile.last_name} </td>
+                                <td className="left"><span className="bold">Last name:</span>{profile.last_name} </td>
                             </tr>
                             <tr>
-                                <td class="left"><span class="bold">Email:</span>{profile.email} </td>
+                                <td className="left"><span className="bold">Email:</span>{profile.email} </td>
                             </tr>
                         </td>
                     </tr>
