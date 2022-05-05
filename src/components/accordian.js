@@ -4,63 +4,92 @@ import '../assets/accordian.css';
 
 export default function Accordian(){
     const [profileData,setProfileData] = useState([]);
-    const link = "https://reqres.in"
+    const [apiError,setApiError] = useState('');
+    const viewConsole=  false;
     useEffect(() => {
-        axios.get(link +"/api/users")
-        .then(res=>{
-           let result = res.data.data;
+        axios.get(process.env.REACT_APP_BASE_URL +"/api/users")
+        .then(response=>{
+           let result = response.data.data;
            result.forEach(element => {
                 element.isActive = false;
             });
             setProfileData(result);
+            viewConsole && console.log(result);
         })
         .catch(error=>{
-            console.log(error)
+            setApiError(error);
+            viewConsole && console.log(apiError);
         })
     }, [])
     function showprofile(profile){
+        viewConsole && console.log(profile);
         profileData.forEach(element => {
             if(element.id !== profile.id){
                 element.isActive = false;
             }
-            
         });
         profile.isActive = !profile.isActive;
         setProfileData([...profileData]);
         let localprofile ={
-            profile:profile
+            profile:null
         }
+        sessionStorage['profile'] === undefined || 
+        !JSON.parse(sessionStorage['profile']).profile  || 
+        JSON.parse(sessionStorage['profile']).profile.id !== profile.id ? localprofile.profile = profile : localprofile.profile = null;
+           
         sessionStorage['profile'] = JSON.stringify(localprofile);
     }
     
   return (
     <div>
+        { apiError && 
+        <div>
+            <label>There is some error</label>
+        </div>}
+        { !apiError && profileData?.length ===0 &&
+        <div>
+            <label>no data found</label>
+        </div>}
+
+        {!apiError && profileData?.length >0 && <div>
         <h1 className='center'>Welcome to Tringapps!</h1>
         {profileData.map(profile =>{
-            return <div  key={profile.id}><button className='button' onClick={()=>showprofile(profile)}><span className='lefttext'>{profile.first_name}</span><span className='righttext'><i className={
-                profile.isActive ? "fa fa-chevron-up":"fa fa-chevron-down"
+            const {id, first_name, last_name, email, avatar, isActive} = profile;
+            return <div  key={id}><button className='button' onClick={()=>showprofile(profile)}><span className='lefttext'>{first_name}</span><span className='righttext'><i className={
+                isActive ? "fa fa-chevron-up":"fa fa-chevron-down"
             }></i></span></button>
-            { profile.isActive ? <div className='panal'>
+            { isActive && <div className='panal'>
            
                 <table>
-                    <tr>
-                        <td><img src={profile.avatar} alt=""/></td>
-                        <td>
-                            <tr>
-                                <td className="left"><span className="bold">First name:</span>{profile.first_name}</td>
-                            </tr>
-                            <tr>
-                                <td className="left"><span className="bold">Last name:</span>{profile.last_name} </td>
-                            </tr>
-                            <tr>
-                                <td className="left"><span className="bold">Email:</span>{profile.email} </td>
-                            </tr>
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            
+                            <td><img src={avatar} alt={first_name}/></td>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td className="left"><span className="bold">First name:</span>{first_name}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="left"><span className="bold">Last name:</span>{last_name} </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="left"><span className="bold">Email:</span>{email} </td>
+                                        </tr>
+                                    </tbody>
+                                
+                                </table>
+                                
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
-            </div>:<div></div>}
+            </div>}
             </div>
         })}
+        </div>}
+        
     </div>
   )
 }
