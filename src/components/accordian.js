@@ -33,9 +33,9 @@ export default function Accordian(){
         let localprofile ={
             profile:null
         }
-        sessionStorage['profile'] === undefined || 
+        localprofile.profile=sessionStorage['profile'] === undefined || 
         !JSON.parse(sessionStorage['profile']).profile  || 
-        JSON.parse(sessionStorage['profile']).profile.id !== profile.id ? localprofile.profile = profile : localprofile.profile = null;
+        JSON.parse(sessionStorage['profile']).profile.id !== profile.id ?   profile :  null;
            
         sessionStorage['profile'] = JSON.stringify(localprofile);
     }
